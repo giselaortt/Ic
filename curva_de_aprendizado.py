@@ -22,7 +22,7 @@ number_of_splits: determina em quantas vezes dividiremos o dataset. É o numeoro
 number_of_runs: numero de vezes em que o modelo sera testado( a cada vez é selecionado um novo dataset de teste. No final será incluida a media dos testes.
 '''
 def curva_aprendizagem( modelo, dataset, model_name = None, number_of_splits = 100, number_of_runs = 5 ):
-	plt.figure()
+	#plt.figure()
 	if( model_name is not None ):
 		plt.title( 'curva de aprendizado para ' + model_name )
 	else:
@@ -37,7 +37,7 @@ def curva_aprendizagem( modelo, dataset, model_name = None, number_of_splits = 1
 	line_one = []
 	line_two = []
 	x_values = []
-	for i in range( 1, number_of_splits ):
+	for i in range(1, number_of_splits ):
 		size = (int)( dataset_size*(i)/(number_of_splits) )
 		x_values.append( size )
 		accuracy_test_set = []
@@ -49,12 +49,11 @@ def curva_aprendizagem( modelo, dataset, model_name = None, number_of_splits = 1
 			accuracy_test_set.append( accuracy_score( y_pred, y_test )*100 )
 			y_pred = modelo.predict( x_train )
 			accuracy_train_set.append( accuracy_score( y_pred, y_train )*100 )
-		line_one.insert(0, np.mean( accuracy_test_set ))
-		line_two.insert(0, np.mean( accuracy_train_set ))
+		line_one.append( accuracy_test_set )
+		line_two.append( accuracy_train_set )
 	plt.plot( x_values, line_one, 'o-', color = "g", label = 'test set' )
 	plt.plot( x_values, line_two, 'o-',color = "b", label = 'training set' )
 	plt.legend( loc = "best" )
 	plt.show()
 
 	return
-
