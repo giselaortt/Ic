@@ -15,8 +15,7 @@ name2: nome da classe 2
 '''
 def tables( train_x, test_x, train_y, test_y, model, name1, name2 ):
 	model.fit( train_x, train_y.flatten() )
-	out = model.predict( test_x )
-	out = [ round(i) for i in out ]
+	out = [ round(model.predict( elem.reshape(1, -1) )) for elem in test_x ]
 	print 'total correct predicted', accuracy_score( out, test_y, normalize = False) 
 	print 'sample size', train_x.shape[0] , "\n" 
 	correct = [_==__ for _,__ in zip( out,test_y )]
@@ -43,3 +42,4 @@ def tables( train_x, test_x, train_y, test_y, model, name1, name2 ):
 	print "{:<10}".format(name2) + '|' + "{:<10}".format(one_false) + '|' + "{:<10}".format(two_correct)
 	print "^"
 	print "predicted classes"
+
